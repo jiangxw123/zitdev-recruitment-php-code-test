@@ -15,6 +15,7 @@ class AppLoggerTest extends TestCase
     {
         $logger = new AppLogger('log4php');
         $logger->info('This is info log message');
+        $this->assertDirectoryExists(dirname(__DIR__)."/../logs/log4php");
     }
 
 
@@ -22,5 +23,6 @@ class AppLoggerTest extends TestCase
     {
         $logger = new AppLogger('think-log');
         $logger->info('This is info log message');
+        $this->assertDirectoryExists(dirname(__DIR__)."/../logs/think-log");
     }
 }
