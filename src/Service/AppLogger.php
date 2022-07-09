@@ -4,29 +4,28 @@ namespace App\Service;
 
 class AppLogger
 {
-    const TYPE_LOG4PHP = 'log4php';
+    protected $loggers = [
+        'log4php'   => "App\\Log\\Log4Php",
+        'think-log' => "App\\Log\\ThinkLog"
+    ];
 
-    private $logger;
+    private $ins;
 
-    public function __construct($type = self::TYPE_LOG4PHP)
+    public function __construct($type = "log4php")
     {
-        if ($type == self::TYPE_LOG4PHP) {
-            $this->logger = \Logger::getLogger("Log");
+
+        if(in_array($type, array_keys($this->loggers))) {
+            $this->ins = new $this->loggers[$type];
+        } else {
+            $this->ins = new $this->loggers['log4php'];
         }
     }
 
-    public function info($message = '')
-    {
-        $this->logger->info($message);
+    public function __call($method, $arguments) {
+        if(!method_exists($this->ins, $method)) {
+            throw new \Exception("call to undefined method: {$$method}.");
+        }
+        call_user_func_array([$this->ins, $method], $arguments);
     }
 
-    public function debug($message = '')
-    {
-        $this->logger->debug($message);
-    }
-
-    public function error($message = '')
-    {
-        $this->logger->error($message);
-    }
 }

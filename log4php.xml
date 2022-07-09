@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns="http://logging.apache.org/log4php/">
+
+    <appender name="default" class="LoggerAppenderRollingFile">
+        <param name="file" value="./logs/log4php/default.log" />
+        <param name="append" value="true" />
+        <param name="maxFileSize" value="1KB" />
+        <param name="maxBackupIndex" value="3" />
+        <layout class="LoggerLayoutPattern">
+            <param name="conversionPattern" value="%d{y-M-d H:m:s} [%level] [%logger] %message%newline" />
+        </layout>
+        <param name="threshold" value="info" />
+    </appender>
+
+    <appender name="log" class="LoggerAppenderRollingFile">
+        <param name="file" value="./logs/log4php/log.log" />
+        <param name="append" value="true" />
+        <param name="maxFileSize" value="1KB" />
+        <param name="maxBackupIndex" value="3" />
+        <layout class="LoggerLayoutPattern">
+            <param name="conversionPattern" value="%d{y-M-d H:m:s} [%level] [%logger] %message%newline" />
+        </layout>
+        <param name="threshold" value="info" />
+    </appender>
+
+    <root>
+        <appender_ref ref="default" />
+    </root>
+
+    <loggger>
+        <appender_ref ref="log" />
+    </loggger>
+
+</configuration>
